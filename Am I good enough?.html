@@ -1,0 +1,112 @@
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+.carouselbox{
+  width:300px;
+  height: 500px;
+}
+@media{}
+img{
+  max-width:100%;
+  display:block;
+  height:100%;
+}
+</style>
+<body>
+  <a href="#my-modal" data-keyboard="true" data-toggle="modal"></a>
+<div class="carouselbox">
+<img name="slide" >
+<div class="buttons">
+
+</div>
+<button class="prev">
+  ◀ <span >Previous</span>
+</button>
+<button class="playbutton">
+Pause
+</button>
+<button class="next">
+  <span>Next</span> ▶
+</button>
+</div>
+</body>
+
+<script>
+//establishing variables
+var i=0;
+var images=[];
+var time=5000;
+var playButton = document.querySelector('.playbutton');
+var next = document.querySelector('.next');
+var prev = document.querySelector('.prev');
+var div=document.querySelector('.carouselbox');
+
+
+//array of images
+images[0]="3.jpg";
+images[1]="4.jpg";
+images[2]="8.jpg";
+images[3]="6.jpg";
+
+//iterating through images
+function changeImage(){
+
+  if (playButton.innerText=="Pause"){
+  document.slide.src=images[i];
+    if(i<images.length-1) {
+    i++;
+    } else {
+      i=0;
+    }
+    setTimeout("changeImage()", time);
+  }
+}
+window.onload=changeImage;
+
+
+//functionality of the play/pause button
+function pause(){
+  if (playButton.innerText =="Play"){
+    playButton.innerText="Pause";
+    changeImage();
+  }else if(playButton.innerText=="Pause"){
+    playButton.innerText="Play";
+  }
+ }
+
+ function forwards(){
+   if(i<images.length-1) {
+     i++;
+   } else {
+     i=0;
+   }
+   document.slide.src=images[i];
+
+ }
+
+ function backwards(){
+   if (i>0){
+   i--;
+ } else {
+   i=images.length-1;
+ }
+   document.slide.src=images[i];
+ }
+
+function arrowkeys(){
+
+  if (e.keyCode==37) {
+    backwards();
+  } else if(e.keyCode==39){
+    forwards();
+  }
+
+}
+
+playButton.addEventListener('click', pause);
+prev.addEventListener('click',backwards);
+next.addEventListener('click',forwards);
+window.addEventListener('keydown', arrowkeys)
+
+</script>
+</html>
